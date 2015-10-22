@@ -5,7 +5,7 @@ abstract class Lexer(val input: String) {
   // 入力文字列中の現在位置
   var p: Int = 0
 
-  def nextToken: Token
+  def nextToken(): Token
 
   def getTokenName(tokenType: Int): String
 }

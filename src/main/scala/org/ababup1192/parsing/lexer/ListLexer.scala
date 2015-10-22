@@ -6,7 +6,7 @@ class ListLexer(input: String) extends Lexer(input) {
 
   import ListLexer._
 
-  def nextToken: Token = {
+  def nextToken(): Token = {
     // 空白処理
     p += ws(input.substring(p, input.length), 0)
 

@@ -9,7 +9,7 @@ object Test {
     import Lexer._
     @tailrec
     def loop(listLexer: ListLexer, tokenList: List[Token]): List[Token] = {
-      val token = listLexer.nextToken
+      val token = listLexer.nextToken()
       if (token == Token(EOF_TYPE, EOF.toString)) tokenList
       else loop(listLexer, token :: tokenList)
     }
