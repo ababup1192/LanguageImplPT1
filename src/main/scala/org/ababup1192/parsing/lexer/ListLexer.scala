@@ -16,6 +16,7 @@ class ListLexer(input: String) extends Lexer(input) {
         case ',' => Token(COMMA, ",")
         case '[' => Token(LBRACK, "[")
         case ']' => Token(RBRACK, "]")
+        case '=' => Token(EQUALS, "=")
         case c =>
           if (c.isLetter) Token(NAME, getName(input.substring(p, input.length)))
           else throw new Error("Invalid character: " + c)
@@ -43,9 +44,10 @@ object ListLexer {
   val COMMA = 3
   val LBRACK = 4
   val RBRACK = 5
+  val EQUALS = 6
 
   val tokenNames = Seq("n/a", "<EOF>", "NAME", "COMMA", "LBRACK",
-    "RBRACK")
+    "RBRACK", "EQUALS")
 
   @tailrec
   def ws(input: String, n: Int): Int = {
@@ -64,7 +66,4 @@ object ListLexer {
   def getName(input: String): String = {
     input.takeWhile(_.isLetter)
   }
-
-
-
 }

@@ -4,20 +4,23 @@ import org.ababup1192.parsing.lexer.Lexer
 
 import scala.annotation.tailrec
 
-class ListParser(input: Lexer) extends Parser(input) {
+class ListParser(input: Lexer) extends Parser(input, 2) {
 
   import org.ababup1192.parsing.lexer.ListLexer._
 
   def list(): Unit = {
-    matchLex(LBRACK); elements(); matchLex(RBRACK)
+    matchLex(LBRACK)
+    elements()
+    matchLex(RBRACK)
   }
 
   def elements(): Unit = {
     element()
     @tailrec
-    def loop():Unit = {
-      if(lookahead.tokenType == COMMA){
-        matchLex(COMMA); element()
+    def loop(): Unit = {
+      if (LA(1) == COMMA) {
+        matchLex(COMMA)
+        element()
         loop()
       }
     }
@@ -25,8 +28,13 @@ class ListParser(input: Lexer) extends Parser(input) {
   }
 
   def element(): Unit = {
-    if (lookahead.tokenType == NAME) matchLex(NAME)
-    else if (lookahead.tokenType == LBRACK) list()
+    if (LA(1) == NAME && LA(2) == EQUALS) {
+      matchLex(NAME)
+      matchLex(EQUALS)
+      matchLex(NAME)
+    }
+    else if (LA(1) == NAME) matchLex(NAME)
+    else if (LA(1) == LBRACK) list()
     else throw new Error("expecting name of list; found " + lookahead)
   }
 }
